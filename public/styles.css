@@ -1,0 +1,67 @@
+/* public/style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-input {
+    text-align: center;
+  }
+  
+  .user-input label,
+  .user-input input,
+  .user-input button {
+    margin: 5px;
+  }
+  
+  .chat {
+    display: none;
+    margin-top: 20px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px 0;
+    background-color: #f7f7f7;
+  }
+  
+  li:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+  
+  #form {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  #input {
+    flex: 1;
+    padding: 8px;
+  }
+  
+  #form button {
+    padding: 8px 15px;
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  

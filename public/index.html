@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat App</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Chat App</h1>
+        <div class="user-input">
+            <label for="username">사용자 이름:</label>
+            <input type="text" id="username" />
+            <button id="startButton">시작</button>
+        </div>
+        <div class="chat" style="display: none;">
+            <ul id="messages"></ul>
+            <form id="form" action="">
+                <input id="input" autocomplete="off" /><button>Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            const socket = io();
+            const $startButton = $('#startButton');
+            const $username = $('#username');
+            const $chat = $('.chat');
+            const $form = $('#form');
+            const $input = $('#input');
+            const $messages = $('#messages');
+            let username = '';
+
+            $startButton.click(function () {
+                username = $username.val();
+                if (username) {
+                    $username.prop('disabled', true);
+                    $startButton.prop('disabled', true);
+                    $chat.show();
+                    socket.emit('set username', username);
+                    socket.emit('request history');
+                }
+            });
+
+            $form.submit(function (e) {
+                e.preventDefault();
+                if (username) {
+                    socket.emit('chat message', { message: $input.val() });
+                    $input.val('');
+                }
+                return false;
+            });
+
+            socket.on('chat message', function (data) {
+                $messages.append($('<li>').text(`${data.username}: ${data.message}`));
+                window.scrollTo(0, document.body.scrollHeight);
+            });
+
+            socket.on('chat history', function (history) {
+                history.forEach((entry) => {
+                    $messages.append($('<li>').text(`${entry.username}: ${entry.message}`));
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
